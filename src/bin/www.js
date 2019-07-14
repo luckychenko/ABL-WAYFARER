@@ -43,8 +43,9 @@ function normalizePort(val) {
 /**
  * Get port from environment and store in Express.
  */
-
-const port = normalizePort(process.env.PORT || '3000');
+const port =
+  normalizePort((process.env.NODE_ENV === 'test' ? process.env.TEST_APP_PORT : process.env.APP_PORT) || process.env.PORT || '3000');
+// const port = normalizePort(process.env.APP_PORT || '3000');
 app.set('port', port);
 
 /**
@@ -95,3 +96,6 @@ function onListening() {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+export default server;

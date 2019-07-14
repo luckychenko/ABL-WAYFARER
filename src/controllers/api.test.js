@@ -1,21 +1,22 @@
 
 import { expect } from 'chai';
 import request from 'supertest';
-import { env } from '../config';
+import server from '../bin/www';
+import { delUser } from '../models';
+const port = (process.env.NODE_ENV === 'test' ? process.env.TEST_APP_PORT : process.env.APP_PORT) || process.env.PORT || '3000';
+//const server = request.agent(`http://localhost:${port}`);
 
-env.config();
-const server = request.agent(`http://localhost:${process.env.PORT || '3000'}`);
-
-
+console.log(port);
 describe('API root json ok test', () => {
   it('responds with json', (done) => {
-    server
+    request(server)
       .get('/')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
 });
+
 
 describe('Users Can Signup', () => {
   it('should not create a new user if any input is not provided', (done) => {
@@ -26,7 +27,7 @@ describe('Users Can Signup', () => {
       last_name: 'low',
     };
 
-    server
+    request(server)
       .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
@@ -38,4 +39,34 @@ describe('Users Can Signup', () => {
         done();
       });
   });
+
+  it('should create a new user with valid data', done => {
+    const user = {
+      email: 'jacl@gnem.com',
+      password: 'password',
+      first_name: 'lucky',
+      last_name: 'low',
+    };
+
+
+    request(server)
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .end( async (err, res) => {
+        const { status, error, data } = res.body;
+
+        expect(res.statusCode).to.be.equal(200);
+        expect(status).to.be.equal('success');
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('user_id');
+        expect(data).to.have.property('is_admin');
+        expect(data).to.have.property('token');
+       // expect(data.name).to.be.equal(user.name);
+       await delUser([data.user_id]);
+
+        done();
+      });
+  });
+
 });
+
