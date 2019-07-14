@@ -1,12 +1,16 @@
 language: node_js
+
 node_js:
--"8"
+  - node
+  - lts/*
+  - 8
+
 services:
   - postgresql
 
 branches:
   only:
-    - master
+    - develop
 
 script:
   - npm run coverage
@@ -16,4 +20,4 @@ env: >
   TEST_APP_PORT='4401'
   TEST_DATABASE_URL='postgres://postgres:admin@localhost:5432/wayfarer_test'
 
-after_success: npm run coverage
+# after_success: npm run coverage
