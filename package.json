@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node  ./dist/bin/www",
-    "start:dev": "nodemon --watch .env --watch src --exec babel-node ./src/bin/www --source-maps",
-    "dev": "nodemon --watch routes,model,services --exec babel-node -- ./src/bin/www --source-maps",
-    "serve": "node dist/bin/www",
+    "start:dev": "cross-env NODE_ENV=development nodemon --watch .env --watch src --exec babel-node ./src/bin/www --source-maps",
+    "dev": "cross-env NODE_ENV=development  nodemon --watch routes,model,services --exec babel-node -- ./src/bin/www --source-maps",
+    "serve": "cross-env NODE_ENV=production  node dist/bin/www",
     "build": "babel src --out-dir dist",
     "testo": "cross-env NODE_ENV=test  mocha --exit --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\"",
-    "test": "mocha --exit  --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\""
+    "test": "cross-env NODE_ENV=test  mocha --exit  --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\""
   },
   "dependencies": {
     "@babel/runtime": "^7.5.4",
@@ -25,6 +25,7 @@
     "helmet": "^3.18.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.14",
     "mocha": "^6.1.4",
     "morgan": "~1.9.1",
     "pg": "^7.11.0"
