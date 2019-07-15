@@ -62,7 +62,7 @@ describe('Users Can Signup', () => {
         expect(data).to.have.property('is_admin');
         expect(data).to.have.property('token');
        // expect(data.name).to.be.equal(user.name);
-       await delUser([data.user_id]);
+        await delUser([data.user_id]);
 
         done();
       });
