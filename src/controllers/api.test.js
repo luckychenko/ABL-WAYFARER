@@ -21,7 +21,7 @@ describe('API root json ok test', () => {
 describe('Users Can Signup', () => {
   it('should not create a new user if any input is not provided', (done) => {
     const user = {
-      email: 'jacl@gnem.com',
+      email: 'jacl@gmail.com',
       password: 'password',
       first_name: '',
       last_name: 'low',
@@ -52,7 +52,7 @@ describe('Users Can Signup', () => {
     request(server)
       .post('/api/v1/auth/signup')
       .send(user)
-      .end( async (err, res) => {
+      .end( (err, res) => {
         const { status, error, data } = res.body;
 
         expect(res.statusCode).to.be.equal(200);
@@ -62,7 +62,7 @@ describe('Users Can Signup', () => {
         expect(data).to.have.property('is_admin');
         expect(data).to.have.property('token');
        // expect(data.name).to.be.equal(user.name);
-        await delUser([data.user_id]);
+        delUser([data.user_id]);
 
         done();
       });
