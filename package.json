@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prestart": "npm run dbmaketables",
     "start": "node  ./dist/bin/www",
     "start:dev": "cross-env NODE_ENV=development nodemon --watch .env --watch src --exec babel-node ./src/bin/www --source-maps",
     "dev": "cross-env NODE_ENV=development  nodemon --watch routes,model,services --exec babel-node -- ./src/bin/www --source-maps",
     "serve": "cross-env NODE_ENV=production  node dist/bin/www",
     "build": "rimraf dist && babel src --out-dir dist",
     "dbmaketables": "node ./src/services/database createTables",
-    "dbdroptables": "node ./src/services/database dropTables",
+    "dbdroptables": "cross-env NODE_ENV=test node ./src/services/database dropTables",
+    "pretest": "cross-env NODE_ENV=test && npm run dbmaketables",
     "test": "cross-env NODE_ENV=test  mocha --exit  --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\"",
     "coverage": "nyc  --reporter lcov --reporter text npm run test"
   },
