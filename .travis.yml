@@ -18,6 +18,12 @@ script:
 env: >
   NODE_ENV=test
   TEST_APP_PORT='4401'
-  TEST_DATABASE_URL='postgres://postgres:admin@localhost:5432/wayfarer_test'
+  TEST_DATABASE_URL='postgres://postgres@localhost:5432/wayfarer_test'
+  TEST_DB='wayfarer_test'
 
-# after_success: npm run coverage
+before_script:
+  - cp .env.example .env
+  - psql -c 'create database wayfarer_test;' -U postgres
+  - npm run dbmaketables
+
+after_success: npm run dbdroptables
