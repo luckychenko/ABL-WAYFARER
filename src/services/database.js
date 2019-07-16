@@ -1,6 +1,7 @@
 
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
+// const bcrypt = require('bcryptjs');
 
 dotenv.config();
 
@@ -30,14 +31,15 @@ const createTables = () => {
   const queryText =
     `BEGIN;
     CREATE TABLE IF NOT EXISTS
-      Booking (
-        id SERIAL PRIMARY KEY,
-        trip_id integer,
-        user_id integer,
-        created_on date
+      booking (
+        id SERIAL NOT NULL,
+        trip_id integer NOT NULL,
+        user_id integer NOT NULL,
+        created_on date,
+        PRIMARY KEY (trip_id, user_id)
       );
     CREATE TABLE IF NOT EXISTS
-      Bus (
+      bus (
         id SERIAL PRIMARY KEY,
         number_plate varchar NOT NULL,
         manufacturer varchar NOT NULL,
@@ -46,7 +48,7 @@ const createTables = () => {
         capacity integer NOT NULL
       );
     CREATE TABLE IF NOT EXISTS
-      Trip (
+      trip (
         id SERIAL PRIMARY KEY,
         bus_id integer NOT NULL,
         origin varchar NOT NULL,
@@ -62,11 +64,13 @@ const createTables = () => {
         first_name varchar NOT NULL,
         last_name varchar NOT NULL,
         password varchar NOT NULL,
-        is_admin boolean NOT NULL DEFAULT false
+        is_admin boolean NOT NULL DEFAULT false,
+        UNIQUE(email)
       );
     INSERT INTO "user" (email, first_name, last_name, password, is_admin) VALUES
-      ('luckychenko@gmail.com', 'Mikael', 'Chenko', 'password', true);
-      COMMIT;`;
+      ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true) ON CONFLICT (email) DO NOTHING;
+
+    COMMIT;`;
 
 
   pool.query(queryText)
