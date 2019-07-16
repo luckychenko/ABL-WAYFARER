@@ -1,6 +1,6 @@
 {
   "name": "abl-wayfarer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "prestart": "npm run dbmaketables",
@@ -13,10 +13,20 @@
     "dbmaketables": "node ./src/services/database createTables",
     "dbdroptables": "node ./src/services/database dropTables",
     "pretest": "cross-env NODE_ENV=test npm run dbmaketables",
-    "test": "cross-env NODE_ENV=test  mocha --exit  --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\"",
     "posttest": "cross-env NODE_ENV=test npm run dbdroptables",
-    "coverage": "nyc  --reporter lcov --reporter text npm run test"
+    "test": "cross-env NODE_ENV=test nyc mocha --exit  --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\" ",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
+  "keywords": [
+    "wayfarer",
+    "javascript",
+    "node",
+    "express",
+    "es6",
+    "api"
+  ],
+  "author": "Lucky Ogidan <luckychenko@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.5.4",
     "@babel/runtime-corejs2": "^7.5.4",
@@ -49,6 +59,7 @@
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
     "make-runnable": "^1.3.6",
+    "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
