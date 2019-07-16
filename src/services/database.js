@@ -39,29 +39,29 @@ const createTables = () => {
     CREATE TABLE IF NOT EXISTS
       Bus (
         id SERIAL PRIMARY KEY,
-        number_plate varchar(15) NOT NULL,
-        manufacturer varchar(100) NOT NULL,
-        model varchar(20) NOT NULL,
-        year varchar(4) NOT NULL,
+        number_plate varchar NOT NULL,
+        manufacturer varchar NOT NULL,
+        model varchar NOT NULL,
+        year varchar NOT NULL,
         capacity integer NOT NULL
       );
     CREATE TABLE IF NOT EXISTS
       Trip (
         id SERIAL PRIMARY KEY,
         bus_id integer NOT NULL,
-        origin varchar(50) NOT NULL,
-        destination varchar(50) NOT NULL,
+        origin varchar NOT NULL,
+        destination varchar NOT NULL,
         trip_date date NOT NULL,
         fare double precision NOT NULL,
-        status varchar(10) NOT NULL DEFAULT 'active'
+        status varchar NOT NULL DEFAULT 'active'
       );
     CREATE TABLE IF NOT EXISTS
       "user" (
         id SERIAL PRIMARY KEY,
-        email varchar(50) NOT NULL,
-        first_name varchar(20) NOT NULL,
-        last_name varchar(20) NOT NULL,
-        password varchar(50) NOT NULL,
+        email varchar NOT NULL,
+        first_name varchar NOT NULL,
+        last_name varchar NOT NULL,
+        password varchar NOT NULL,
         is_admin boolean NOT NULL DEFAULT false
       );
     INSERT INTO "user" (email, first_name, last_name, password, is_admin) VALUES
