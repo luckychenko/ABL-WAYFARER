@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
   try {
     // Check if user account exists
     const userExists = await model.findUserByEmail([body.email]);
-    if (userExists.rows.length > 0) return res.status(401).json({status: 'error', error: 'User with this email address already registered'});
+    if (userExists.rows.length > 0) return res.status(400).json({status: 'error', error: 'User with this email address already registered'});
 
     // hash password
     const passwordHashed = bcrypt.hashSync(body.password, 10);

@@ -24,6 +24,5 @@ env: >
 before_script:
   - cp .env.example .env
   - psql -c 'create database wayfarer_test;' -U postgres
-  - npm run dbmaketables
 
 after_success: npm run dbdroptables
