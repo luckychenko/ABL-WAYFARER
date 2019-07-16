@@ -32,10 +32,11 @@ const createTables = () => {
     `BEGIN;
     CREATE TABLE IF NOT EXISTS
       booking (
-        id SERIAL PRIMARY KEY,
+        id SERIAL,
         trip_id integer,
         user_id integer,
-        created_on date
+        created_on date,
+        PRIMARY KEY(trip_id, user_id)
       );
     CREATE TABLE IF NOT EXISTS
       bus (
@@ -63,7 +64,8 @@ const createTables = () => {
         first_name varchar NOT NULL,
         last_name varchar NOT NULL,
         password varchar NOT NULL,
-        is_admin boolean NOT NULL DEFAULT false
+        is_admin boolean NOT NULL DEFAULT false,
+        UNIQUE(email)
       );
     INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
       ('luckychenko@gmail.com', 'Mikael', 'Chenko', 'password', true);
