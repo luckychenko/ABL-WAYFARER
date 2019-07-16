@@ -68,7 +68,7 @@ const createTables = () => {
         UNIQUE(email)
       );
     INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
-      ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true) ON CONFLICT (email) DO NOTHING;
+      ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true);
       COMMIT;`;
 
 
