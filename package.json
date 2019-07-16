@@ -12,9 +12,9 @@
     "build": "rimraf dist && babel src --out-dir dist",
     "dbmaketables": "node ./src/services/database createTables",
     "dbdroptables": "cross-env NODE_ENV=test node ./src/services/database dropTables",
-    "pretest": "cross-env NODE_ENV=test && npm run dbmaketables",
+    "pretest": " npm run dbmaketables",
     "test": "cross-env NODE_ENV=test  mocha --exit  --reporter spec --recursive --require @babel/register \"src/controllers/**/*.test.js\"",
-    "posttest": "cross-env NODE_ENV=test && npm run dbdroptables",
+    "posttest": "npm run dbdroptables",
     "coverage": "nyc  --reporter lcov --reporter text npm run test"
   },
   "dependencies": {
