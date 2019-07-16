@@ -31,14 +31,14 @@ const createTables = () => {
   const queryText =
     `BEGIN;
     CREATE TABLE IF NOT EXISTS
-      Booking (
+      booking (
         id SERIAL PRIMARY KEY,
         trip_id integer,
         user_id integer,
         created_on date
       );
     CREATE TABLE IF NOT EXISTS
-      Bus (
+      bus (
         id SERIAL PRIMARY KEY,
         number_plate varchar NOT NULL,
         manufacturer varchar NOT NULL,
@@ -47,7 +47,7 @@ const createTables = () => {
         capacity integer NOT NULL
       );
     CREATE TABLE IF NOT EXISTS
-      Trip (
+      trip (
         id SERIAL PRIMARY KEY,
         bus_id integer NOT NULL,
         origin varchar NOT NULL,
