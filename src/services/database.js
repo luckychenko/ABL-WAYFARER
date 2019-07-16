@@ -36,7 +36,7 @@ const createTables = () => {
         trip_id integer NOT NULL,
         user_id integer NOT NULL,
         created_on date,
-        PRIMARY KEY (trip_id, user_id)
+        PRIMARY KEY(trip_id, user_id)
       );
     CREATE TABLE IF NOT EXISTS
       bus (
@@ -60,12 +60,11 @@ const createTables = () => {
     CREATE TABLE IF NOT EXISTS
       users (
         id SERIAL PRIMARY KEY,
-        email varchar NOT NULL,
+        email varchar NOT NULL UNIQUE,
         first_name varchar NOT NULL,
         last_name varchar NOT NULL,
         password varchar NOT NULL,
-        is_admin boolean NOT NULL DEFAULT false,
-        UNIQUE(email)
+        is_admin boolean NOT NULL DEFAULT false
       );
     INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
       ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true) ON CONFLICT (email) DO NOTHING;
