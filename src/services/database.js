@@ -30,14 +30,14 @@ const createTables = () => {
   const queryText =
     `BEGIN;
     CREATE TABLE IF NOT EXISTS
-      Bookingz(
+      Booking(
         id SERIAL PRIMARY KEY,
         trip_id integer,
         user_id integer,
         created_on date
       );
     CREATE TABLE IF NOT EXISTS
-      Bux (
+      Bus (
         id SERIAL PRIMARY KEY,
         number_plate varchar(15) NOT NULL,
         manufacturer varchar(100) NOT NULL,
@@ -46,7 +46,7 @@ const createTables = () => {
         capacity integer NOT NULL
       );
     CREATE TABLE IF NOT EXISTS
-      Tripx (
+      Trip (
         id SERIAL PRIMARY KEY,
         bus_id integer NOT NULL,
         origin varchar(50) NOT NULL,
@@ -56,7 +56,7 @@ const createTables = () => {
         status varchar(10) NOT NULL DEFAULT 'active'
       );
     CREATE TABLE IF NOT EXISTS
-      Userx (
+      User (
         id SERIAL PRIMARY KEY,
         email varchar(50) NOT NULL,
         first_name varchar(20) NOT NULL,
@@ -64,8 +64,8 @@ const createTables = () => {
         password varchar(50) NOT NULL,
         is_admin boolean NOT NULL DEFAULT false
       );
-    INSERT INTO Userx (email, first_name, last_name, password, is_admin) VALUES
-      ('luckychenko@gmail.com', 'Lucky', 'Ogidan', 'eminem', true);
+    INSERT INTO User (email, first_name, last_name, password, is_admin) VALUES
+      ('luckychenko@gmail.com', 'Mikael', 'Chenko', 'password', true);
       COMMIT;`;
 
 

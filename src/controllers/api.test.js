@@ -21,9 +21,9 @@ describe('API root json ok test', () => {
 describe('Users Can Signup', () => {
   it('should not create a new user if any input is not provided', (done) => {
     const user = {
-      email: 'jacl@gmail.com',
+      email: '',
       password: 'password',
-      first_name: '',
+      first_name: 'john',
       last_name: 'low',
     };
 
@@ -42,9 +42,9 @@ describe('Users Can Signup', () => {
 
   it('should create a new user with valid data', done => {
     const user = {
-      email: 'jacl@gnem.com',
+      email: 'johndoe@gmail.com',
       password: 'password',
-      first_name: 'lucky',
+      first_name: 'john',
       last_name: 'low',
     };
 
