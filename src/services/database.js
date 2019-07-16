@@ -1,6 +1,7 @@
 
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
+// const bcrypt = require('bcryptjs');
 
 dotenv.config();
 
@@ -30,14 +31,15 @@ const createTables = () => {
   const queryText =
     `BEGIN;
     CREATE TABLE IF NOT EXISTS
-      Booking (
-        id SERIAL PRIMARY KEY,
+      booking (
+        id SERIAL,
         trip_id integer,
         user_id integer,
-        created_on date
+        created_on date,
+        PRIMARY KEY(trip_id, user_id)
       );
     CREATE TABLE IF NOT EXISTS
-      Bus (
+      bus (
         id SERIAL PRIMARY KEY,
         number_plate varchar NOT NULL,
         manufacturer varchar NOT NULL,
@@ -46,7 +48,7 @@ const createTables = () => {
         capacity integer NOT NULL
       );
     CREATE TABLE IF NOT EXISTS
-      Trip (
+      trip (
         id SERIAL PRIMARY KEY,
         bus_id integer NOT NULL,
         origin varchar NOT NULL,
@@ -56,15 +58,16 @@ const createTables = () => {
         status varchar NOT NULL DEFAULT 'active'
       );
     CREATE TABLE IF NOT EXISTS
-      "user" (
+      users (
         id SERIAL PRIMARY KEY,
         email varchar NOT NULL,
         first_name varchar NOT NULL,
         last_name varchar NOT NULL,
         password varchar NOT NULL,
-        is_admin boolean NOT NULL DEFAULT false
+        is_admin boolean NOT NULL DEFAULT false,
+        UNIQUE(email)
       );
-    INSERT INTO "user" (email, first_name, last_name, password, is_admin) VALUES
+    INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
       ('luckychenko@gmail.com', 'Mikael', 'Chenko', 'password', true);
       COMMIT;`;
 
@@ -85,7 +88,7 @@ const createTables = () => {
  * Drop Tables
  */
 const dropTables = () => {
-  const queryText = 'DROP TABLE IF EXISTS "user", Booking, Bus, Trip';
+  const queryText = 'DROP TABLE IF EXISTS users, booking, bus, trip';
   pool.query(queryText)
     .then((res) => {
       console.log(res);
