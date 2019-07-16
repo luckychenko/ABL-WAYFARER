@@ -58,7 +58,7 @@ const createTables = () => {
         status varchar NOT NULL DEFAULT 'active'
       );
     CREATE TABLE IF NOT EXISTS
-      "user" (
+      users (
         id SERIAL PRIMARY KEY,
         email varchar NOT NULL,
         first_name varchar NOT NULL,
@@ -67,7 +67,7 @@ const createTables = () => {
         is_admin boolean NOT NULL DEFAULT false,
         UNIQUE(email)
       );
-    INSERT INTO "user" (email, first_name, last_name, password, is_admin) VALUES
+    INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
       ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true) ON CONFLICT (email) DO NOTHING;
 
     COMMIT;`;
@@ -89,7 +89,7 @@ const createTables = () => {
  * Drop Tables
  */
 const dropTables = () => {
-  const queryText = 'DROP TABLE IF EXISTS "user", Booking, Bus, Trip';
+  const queryText = 'DROP TABLE IF EXISTS users, booking, bus, trip';
   pool.query(queryText)
     .then((res) => {
       console.log(res);
