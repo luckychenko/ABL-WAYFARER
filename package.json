@@ -30,6 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.5.4",
     "@babel/runtime-corejs2": "^7.5.4",
+    "acorn": "^6.1.1",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "cookie-parser": "~1.4.4",

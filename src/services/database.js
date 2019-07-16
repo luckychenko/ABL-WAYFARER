@@ -13,14 +13,14 @@ if (process.env.NODE_ENV === 'test') {
   dbEnv = process.env.DATABASE_URL;
 }
 
-console.log('inconfig', process.env.NODE_ENV);
-console.log('inconfig', dbEnv);
+// console.log('inconfig', process.env.NODE_ENV);
+// console.log('inconfig', dbEnv);
 const pool = new Pool({
   connectionString: dbEnv,
 });
 
 pool.on('connect', () => {
-  console.log('connected to the db');
+  // console.log('connected to the db');
 });
 
 /**
@@ -28,8 +28,7 @@ pool.on('connect', () => {
  */
 
 const createTables = () => {
-  const queryText =
-    `BEGIN;
+  const queryText = `BEGIN;
     CREATE TABLE IF NOT EXISTS
       booking (
         id SERIAL,
@@ -73,15 +72,13 @@ const createTables = () => {
 
 
   pool.query(queryText)
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       pool.end();
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       pool.end();
     });
-}
+};
 
 
 /**
@@ -90,15 +87,13 @@ const createTables = () => {
 const dropTables = () => {
   const queryText = 'DROP TABLE IF EXISTS users, booking, bus, trip';
   pool.query(queryText)
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       pool.end();
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       pool.end();
     });
-}
+};
 
 pool.on('remove', () => {
   console.log('client removed');
@@ -107,7 +102,7 @@ pool.on('remove', () => {
 
 module.exports = {
   createTables,
-  dropTables
+  dropTables,
 };
 
 require('make-runnable');

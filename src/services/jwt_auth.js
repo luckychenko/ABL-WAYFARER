@@ -26,20 +26,20 @@ const authService = (req, res, next) => {
       if (/^Bearer$/.test(scheme)) {
         tokenToVerify = credentials;
       } else {
-        return res.status(401).json({ msg: 'Format for Authorization: Bearer [token]' });
+        return res.status(401).json({ status: 'error', error: 'Format for Authorization: Bearer [token]' });
       }
     } else {
-      return res.status(401).json({ msg: 'Format for Authorization: Bearer [token]' });
+      return res.status(401).json({ status: 'error', error: 'Format for Authorization: Bearer [token]' });
     }
   } else if (req.body.token) {
     tokenToVerify = req.body.token;
     delete req.query.token;
   } else {
-    return res.status(401).json({ msg: 'No Authorization was found' });
+    return res.status(401).json({ status: 'error', error: 'No Authorization was found' });
   }
 
   return tokenService().authenticate(tokenToVerify, (err, thisToken) => {
-    if (err) return res.status(401).json({ err });
+    if (err) return res.status(401).json({ status: 'error', error: err });
     req.token = thisToken;
     return next();
   });
