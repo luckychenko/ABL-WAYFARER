@@ -13,14 +13,14 @@ if (process.env.NODE_ENV === 'test') {
   dbEnv = process.env.DATABASE_URL;
 }
 
-// console.log('inconfig', process.env.NODE_ENV);
-// console.log('inconfig', dbEnv);
+console.log('inconfig', process.env.NODE_ENV);
+console.log('inconfig', dbEnv);
 const pool = new Pool({
   connectionString: dbEnv,
 });
 
 pool.on('connect', () => {
-  // console.log('connected to the db');
+  console.log('connected to the db');
 });
 
 /**
@@ -28,7 +28,8 @@ pool.on('connect', () => {
  */
 
 const createTables = () => {
-  const queryText = `BEGIN;
+  const queryText = `
+    BEGIN;
     CREATE TABLE IF NOT EXISTS
       booking (
         id SERIAL,
@@ -68,14 +69,17 @@ const createTables = () => {
       );
     INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
       ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true);
-      COMMIT;`;
+    INSERT INTO bus (id, number_plate, manufacturer, model, year, capacity) VALUES ('100', 'KUJ-01-ABJ', 'Toyota', 'Hiace', '2005', 18);
+    COMMIT;`;
 
 
   pool.query(queryText)
-    .then(() => {
+    .then((res) => {
+      console.log(res);
       pool.end();
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       pool.end();
     });
 };
@@ -87,10 +91,12 @@ const createTables = () => {
 const dropTables = () => {
   const queryText = 'DROP TABLE IF EXISTS users, booking, bus, trip';
   pool.query(queryText)
-    .then(() => {
+    .then((res) => {
+      console.log(res);
       pool.end();
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       pool.end();
     });
 };
