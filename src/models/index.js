@@ -29,6 +29,7 @@ const findBus = values => pool.query('SELECT * FROM bus WHERE id = $1', values);
  */
 const createTrip = values => pool.query('INSERT INTO trip (bus_id, origin, destination, fare, trip_date) VALUES ($1, $2, $3, $4, $5) RETURNING *', values);
 
+const getAllTrips = () => pool.query('SELECT id as trip_id, bus_id, origin, destination, trip_date, fare FROM trip');
 
 module.exports = {
   pool,
@@ -39,4 +40,5 @@ module.exports = {
   delUser,
   findBus,
   createTrip,
+  getAllTrips,
 };

@@ -29,7 +29,6 @@ pool.on('connect', () => {
 
 const createTables = () => {
   const queryText = `
-    BEGIN;
     CREATE TABLE IF NOT EXISTS
       booking (
         id SERIAL,
@@ -70,7 +69,7 @@ const createTables = () => {
     INSERT INTO users (email, first_name, last_name, password, is_admin) VALUES
       ('luckychenko@gmail.com', 'Mikael', 'Chenko', '$2a$10$nhvggt.YpR/YadHZtMffdeGl5ojmn18bLVROc6xRmjnG7VaSwJhPO', true);
     INSERT INTO bus (id, number_plate, manufacturer, model, year, capacity) VALUES ('100', 'KUJ-01-ABJ', 'Toyota', 'Hiace', '2005', 18);
-    COMMIT;`;
+    INSERT INTO trip (bus_id, origin, destination, fare, trip_date) VALUES ('100', 'lagos', 'abuja', '9500', '2019/08/02'), ('100', 'abuja', 'ibadan', '9000', '2019/08/05');`;
 
 
   pool.query(queryText)
