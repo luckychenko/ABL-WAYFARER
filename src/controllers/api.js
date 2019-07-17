@@ -55,6 +55,26 @@ router.post('/trips', authService, async (req, res) => {
   }
 });
 
+
+router.get('/trips', authService, async (req, res) => {
+  //  const { token } = req;
+
+  try {
+    // create trip
+    const getTrip = await model.getAllTrips();
+
+    const trips = getTrip.rows;
+
+    return res.status(200).json({
+      status: 'success',
+      data: trips,
+    });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', error: 'Internal server error' });
+  }
+});
+
+
 /* manually validate user token */
 const validate = (req, res) => {
   const { token } = req.body;

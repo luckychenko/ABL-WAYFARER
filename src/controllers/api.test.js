@@ -117,4 +117,22 @@ describe('Trip', () => {
     expect(testres.body.data).to.be.an('object');
     expect(testres.body.data).to.have.property('trip_id');
   });
+
+  it('both admin and user can see trips', async () => {
+    const res2 = await request(server)
+      .post('/api/v1/auth/signin')
+      .send({
+        email: 'luckychenko@gmail.com',
+        password: 'password',
+      })
+      .expect(200);
+    expect(res2.body.data).to.have.property('token');
+
+    const testtrip = await request(server)
+      .get('/api/v1/trips')
+      .set('Authorization', `Bearer ${res2.body.data.token}`);
+    expect(testtrip.statusCode).to.be.equal(200);
+    expect(testtrip.body.status).to.be.equal('success');
+    expect(testtrip.body.data).to.be.an('array');
+  });
 });
