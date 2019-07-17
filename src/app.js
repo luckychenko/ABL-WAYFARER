@@ -6,7 +6,6 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 import { auth, secured } from './controllers';
-// import apiRouter from './routes/api';
 
 const app = express();
 
